@@ -1,0 +1,28 @@
+# secrets
+.env
+.env.*
+!.env.example
+
+# python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# node
+node_modules/
+.next/
+dist/
+
+# ml
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+ml/data/*
+!ml/data/.gitkeep
+
+# os / editor
+.DS_Store
+.vscode/
+.idea/
