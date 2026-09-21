@@ -1,74 +1,74 @@
 {
-  "scenarios_per_phase": 40,
-  "learn_scenarios": 15,
-  "genuine_per_check": 2000,
+  "scenarios_per_phase": 60,
+  "learn_scenarios": 20,
+  "genuine_per_check": 3000,
   "seed": 7,
   "results": [
     {
       "family": "structuring",
       "before": {
-        "txns": 273,
-        "flagged_rate": 0.0879,
-        "blocked_rate": 0.0586,
-        "money_lost_share": 0.8364,
+        "txns": 398,
+        "flagged_rate": 0.0905,
+        "blocked_rate": 0.0704,
+        "money_lost_share": 0.8726,
         "labelled": 0
       },
-      "learned_labels": 85,
+      "learned_labels": 122,
       "after": {
-        "txns": 277,
-        "flagged_rate": 0.8159,
-        "blocked_rate": 0.6498,
-        "money_lost_share": 0.0699,
+        "txns": 430,
+        "flagged_rate": 0.7744,
+        "blocked_rate": 0.6419,
+        "money_lost_share": 0.1717,
         "labelled": 0
       },
       "genuine_false_alarms": {
-        "rows": 2000,
+        "rows": 3000,
         "before": 2,
-        "after": 13
+        "after": 11
       }
     },
     {
       "family": "partial_drain",
       "before": {
-        "txns": 40,
-        "flagged_rate": 0.35,
-        "blocked_rate": 0.1,
-        "money_lost_share": 0.6832,
+        "txns": 60,
+        "flagged_rate": 0.4167,
+        "blocked_rate": 0.1667,
+        "money_lost_share": 0.4541,
         "labelled": 0
       },
-      "learned_labels": 15,
+      "learned_labels": 20,
       "after": {
-        "txns": 40,
-        "flagged_rate": 0.425,
-        "blocked_rate": 0.225,
-        "money_lost_share": 0.5271,
+        "txns": 60,
+        "flagged_rate": 0.5667,
+        "blocked_rate": 0.3167,
+        "money_lost_share": 0.24,
         "labelled": 0
       },
       "genuine_false_alarms": {
-        "rows": 2000,
+        "rows": 3000,
         "before": 2,
-        "after": 2
+        "after": 3
       }
     },
     {
       "family": "combo",
       "before": {
-        "txns": 40,
-        "flagged_rate": 0.15,
+        "txns": 60,
+        "flagged_rate": 0.1667,
         "blocked_rate": 0.0,
-        "money_lost_share": 0.3103,
+        "money_lost_share": 0.2695,
         "labelled": 0
       },
-      "learned_labels": 15,
+      "learned_labels": 20,
       "after": {
-        "txns": 40,
-        "flagged_rate": 0.675,
-        "blocked_rate": 0.4,
-        "money_lost_share": 0.0551,
+        "txns": 60,
+        "flagged_rate": 0.7167,
+        "blocked_rate": 0.55,
+        "money_lost_share": 0.0266,
         "labelled": 0
       },
       "genuine_false_alarms": {
-        "rows": 2000,
+        "rows": 3000,
         "before": 2,
         "after": 2
       }
@@ -76,22 +76,22 @@
     {
       "family": "aged_mule",
       "before": {
-        "txns": 40,
+        "txns": 60,
         "flagged_rate": 1.0,
-        "blocked_rate": 0.975,
+        "blocked_rate": 0.95,
         "money_lost_share": 0.0,
         "labelled": 0
       },
-      "learned_labels": 15,
+      "learned_labels": 20,
       "after": {
-        "txns": 40,
+        "txns": 60,
         "flagged_rate": 1.0,
         "blocked_rate": 1.0,
         "money_lost_share": 0.0,
         "labelled": 0
       },
       "genuine_false_alarms": {
-        "rows": 2000,
+        "rows": 3000,
         "before": 2,
         "after": 2
       }
