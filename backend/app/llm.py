@@ -53,7 +53,7 @@ def build_facts(alert: Alert) -> dict:
         "model_factors": [
             {"factor": r["label"], "value": round(r["value"], 2),
              "effect": "raises risk" if r["direction"] == "increases_risk" else "lowers risk"}
-            for r in alert.reasons
+            for r in alert.reasons[:3]
         ],
     }
 

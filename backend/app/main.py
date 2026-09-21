@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 
 from app.auth import get_current_user
 from app.db import get_db
-from app.routers import alerts, auth, feedback, score, transactions
+from app.routers import alerts, auth, feedback, metrics, score, transactions
 from app.scoring import ml
 
 
@@ -25,6 +25,7 @@ app.include_router(score.router, dependencies=protected)
 app.include_router(alerts.router, dependencies=protected)
 app.include_router(feedback.router, dependencies=protected)
 app.include_router(transactions.router, dependencies=protected)
+app.include_router(metrics.router, dependencies=protected)
 
 
 @app.get("/health")

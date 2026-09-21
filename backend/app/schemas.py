@@ -82,7 +82,32 @@ class TransactionSummary(BaseModel):
     amount: float
     name_orig: str
     name_dest: str
+    oldbalance_org: float
+    newbalance_orig: float
+    oldbalance_dest: float
+    newbalance_dest: float
     true_label: bool | None
+    created_at: datetime
+
+
+class ScoreBreakdown(BaseModel):
+    model: float
+    similarity: float
+    anomaly: float
+    rules: float
+    combined: float
+
+
+class Thresholds(BaseModel):
+    review: float
+    block: float
+
+
+class FeedbackInfo(BaseModel):
+    verdict: str
+    username: str
+    note: str | None
+    created_at: datetime
 
 
 class AlertOut(BaseModel):
@@ -96,6 +121,9 @@ class AlertOut(BaseModel):
     explanation_source: str
     created_at: datetime
     transaction: TransactionSummary
+    scores: ScoreBreakdown
+    thresholds: Thresholds
+    feedback: FeedbackInfo | None = None
 
 
 class AlertList(BaseModel):
@@ -119,7 +147,6 @@ class FeedbackOut(BaseModel):
     case_added: bool
 
 
-
 class ReportFraudIn(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
@@ -140,23 +167,93 @@ class PreviewOut(BaseModel):
     rules: list[RuleFlagOut]
 
 
-
-
-class ReportFraudIn(BaseModel):
-    model_config = ConfigDict(extra="forbid")
-
-    note: str | None = Field(default=None, max_length=500)
-
-
-class ReportFraudOut(BaseModel):
-    transaction_id: int
-    case_id: int
-    case_added: bool
-
-
-class PreviewOut(BaseModel):
+class FeedRow(BaseModel):
+    id: int
+    created_at: datetime
+    step: int
+    type: str
+    amount: float
+    name_orig: str
+    name_dest: str
     decision: Literal["approve", "review", "block"]
-    combined_score: float
-    xgb_proba: float
-    similarity_score: float
-    rules: list[RuleFlagOut]
+    score: float
+    alert_id: int | None
+    alert_status: str | None
+    true_label: bool | None
+
+
+class FeedOut(BaseModel):
+    items: list[FeedRow]
+    last_id: int | None
+
+
+class SimilarCase(BaseModel):
+    id: int
+    label: str
+    source: str
+    distance: float
+    type: str | None
+    amount: float | None
+    hour: int | None
+    note: str | None
+    alert_id: int | None
+
+
+class SimilarSummary(BaseModel):
+    fraud: int
+    legit: int
+    learned_fraud: int
+    learned_legit: int
+
+
+class SimilarOut(BaseModel):
+    alert_id: int
+    k: int
+    cases: list[SimilarCase]
+    summary: SimilarSummary
+
+
+class DecisionCounts(BaseModel):
+    total: int
+    approve: int
+    review: int
+    block: int
+
+
+class GroundTruthMetrics(BaseModel):
+    labelled: int
+    fraud_total: int
+    fraud_flagged: int
+    fraud_blocked: int
+    genuine_total: int
+    genuine_flagged: int
+    genuine_blocked: int
+    catch_rate: float | None
+    block_catch_rate: float | None
+    false_positive_rate: float | None
+    false_block_rate: float | None
+    precision_flagged: float | None
+    precision_block: float | None
+    stream_fraud_share: float | None
+
+
+class AlertStats(BaseModel):
+    open: int
+    confirmed_fraud: int
+    false_positive: int
+    reviewed: int
+    analyst_precision: float | None
+
+
+class LearnedCases(BaseModel):
+    fraud: int
+    legit: int
+
+
+class MetricsOut(BaseModel):
+    window_minutes: int | None
+    decisions: DecisionCounts
+    ground_truth: GroundTruthMetrics
+    alerts: AlertStats
+    learned_cases: LearnedCases
+    note: str

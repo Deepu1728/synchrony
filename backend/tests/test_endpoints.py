@@ -23,7 +23,7 @@ def test_fraud_is_blocked_and_creates_alert(client, auth, db):
     assert r.status_code == 200
     body = r.json()
     assert body["decision"] == "block" and body["alert_id"]
-    assert len(body["reasons"]) == 3 and body["explanation"].startswith("Blocked")
+    assert len(body["reasons"]) == 6 and body["explanation"].startswith("Blocked")
     assert {x["code"] for x in body["rules"]} >= {"FULL_BALANCE_DRAIN"}
     assert body["latency_ms"] > 0
     txn = db.get(Transaction, body["transaction_id"])

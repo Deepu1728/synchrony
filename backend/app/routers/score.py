@@ -39,10 +39,10 @@ def score(txn: TransactionIn, background: BackgroundTasks, db: Session = Depends
     alert, reasons, explanation = None, [], None
     if result.decision != "approve":
         try:
-            reasons = ml.explain(result.features)
+            reasons = ml.explain(result.features, top_k=6)
         except Exception:
             logger.exception("SHAP explanation failed")
-        explanation = fallback_text(result.decision, result.combined_score, reasons, result.rule_hits)
+        explanation = fallback_text(result.decision, result.combined_score, reasons[:3], result.rule_hits)
         alert = Alert(
             transaction_id=row.id, score=result.combined_score, decision=result.decision,
             reasons=reasons, explanation_text=explanation, explanation_source="shap_fallback",
