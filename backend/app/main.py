@@ -1,7 +1,9 @@
 import threading
 from contextlib import asynccontextmanager
 
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException, Request
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
@@ -18,6 +20,13 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="Synchrony Fraud API", version="0.1.0", lifespan=lifespan)
+
+@app.exception_handler(RequestValidationError)
+async def validation_error(request: Request, exc: RequestValidationError):
+    # Drop the echoed input: NaN / Infinity cannot be encoded as JSON and used to turn a 422 into a 500.
+    errors = [{"loc": e["loc"], "msg": e["msg"], "type": e["type"]} for e in exc.errors()]
+    return JSONResponse(status_code=422, content={"detail": errors})
+
 
 protected = [Depends(get_current_user)]
 app.include_router(auth.router)

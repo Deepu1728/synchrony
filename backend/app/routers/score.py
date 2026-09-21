@@ -1,8 +1,6 @@
 import logging
 import time
 
-import fastapi
-
 from fastapi import APIRouter, BackgroundTasks, Depends
 from sqlalchemy.orm import Session
 
@@ -61,7 +59,6 @@ def score(txn: TransactionIn, background: BackgroundTasks, db: Session = Depends
         explanation=explanation, reasons=reasons,
         latency_ms=round((time.perf_counter() - started) * 1000, 1),
     )
-
 
 
 @router.post("/score/preview", response_model=PreviewOut)
