@@ -117,3 +117,46 @@ class FeedbackOut(BaseModel):
     verdict: str
     alert_status: str
     case_added: bool
+
+
+
+class ReportFraudIn(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    note: str | None = Field(default=None, max_length=500)
+
+
+class ReportFraudOut(BaseModel):
+    transaction_id: int
+    case_id: int
+    case_added: bool
+
+
+class PreviewOut(BaseModel):
+    decision: Literal["approve", "review", "block"]
+    combined_score: float
+    xgb_proba: float
+    similarity_score: float
+    rules: list[RuleFlagOut]
+
+
+
+
+class ReportFraudIn(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    note: str | None = Field(default=None, max_length=500)
+
+
+class ReportFraudOut(BaseModel):
+    transaction_id: int
+    case_id: int
+    case_added: bool
+
+
+class PreviewOut(BaseModel):
+    decision: Literal["approve", "review", "block"]
+    combined_score: float
+    xgb_proba: float
+    similarity_score: float
+    rules: list[RuleFlagOut]

@@ -10,6 +10,7 @@ class RuleHit:
     message: str
     weight: float
     forces_review: bool = False
+    forces_block: bool = False
 
 
 def evaluate_rules(txn: TransactionIn, features: dict) -> list[RuleHit]:

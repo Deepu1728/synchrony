@@ -30,21 +30,37 @@ def combine(xgb_p: float, anomaly: float, similar: float, rule: float) -> float:
     )
 
 
-def decide(combined: float, forced_review: bool = False) -> str:
-    if combined >= settings.block_threshold:
+def decide(combined: float, forced_review: bool = False, forced_block: bool = False) -> str:
+    if combined >= settings.block_threshold or forced_block:
         return "block"
     if combined >= settings.review_threshold or forced_review:
         return "review"
     return "approve"
 
 
+def learned_pattern_hit(n: similarity.Neighbours) -> rules.RuleHit | None:
+    evidence = n.learned_fraud - n.learned_legit
+    if evidence >= settings.learned_review_min:
+        return rules.RuleHit(
+            "LEARNED_FRAUD_PATTERN",
+            f"Closely matches {n.learned_fraud} analyst-confirmed fraud cases",
+            0.5,
+            forces_review=True,
+            forces_block=evidence >= settings.learned_block_min,
+        )
+    return None
+
+
 def score_transaction(db: Session, txn: TransactionIn) -> ScoreResult:
     feats = online_features.build_features(db, txn)
     hits = rules.evaluate_rules(txn, feats)
-    rule = rules.rule_score(hits)
     xgb_p = ml.xgb_proba(feats)
     anomaly = ml.anomaly_percentile(feats)
-    similar, fraud_neighbours = similarity.fraud_neighbour_share(db, feats)
+    neighbours = similarity.find_neighbours(db, feats)
+    similar, fraud_neighbours = neighbours.fraud_share, neighbours.fraud
+    if learned := learned_pattern_hit(neighbours):
+        hits.append(learned)
+    rule = rules.rule_score(hits)
     combined = combine(xgb_p, anomaly, similar, rule)
     return ScoreResult(
         features=feats,
@@ -55,5 +71,5 @@ def score_transaction(db: Session, txn: TransactionIn) -> ScoreResult:
         similarity_score=similar,
         fraud_neighbours=fraud_neighbours,
         combined_score=combined,
-        decision=decide(combined, any(h.forces_review for h in hits)),
+        decision=decide(combined, any(h.forces_review for h in hits), any(h.forces_block for h in hits)),
     )

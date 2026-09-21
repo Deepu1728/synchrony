@@ -10,7 +10,7 @@ from app.db import get_db
 from app import llm
 from app.explanations import explain_in_background, fallback_text
 from app.models import Alert, Transaction
-from app.schemas import ScoreOut, TransactionIn
+from app.schemas import PreviewOut, ScoreOut, TransactionIn
 from app.scoring import ml
 from app.scoring.pipeline import score_transaction
 
@@ -60,4 +60,15 @@ def score(txn: TransactionIn, background: BackgroundTasks, db: Session = Depends
         rule_score=result.rule_score, rules=rules, alert_id=alert.id if alert else None,
         explanation=explanation, reasons=reasons,
         latency_ms=round((time.perf_counter() - started) * 1000, 1),
+    )
+
+
+
+@router.post("/score/preview", response_model=PreviewOut)
+def preview(txn: TransactionIn, db: Session = Depends(get_db)):
+    result = score_transaction(db, txn)
+    return PreviewOut(
+        decision=result.decision, combined_score=result.combined_score, xgb_proba=result.xgb_proba,
+        similarity_score=result.similarity_score,
+        rules=[{"code": h.code, "message": h.message, "weight": h.weight} for h in result.rule_hits],
     )

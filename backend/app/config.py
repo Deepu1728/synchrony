@@ -35,6 +35,8 @@ class Settings(BaseSettings):
     review_threshold: float = 0.30
     block_threshold: float = 0.70
     similarity_k: int = 10
+    learned_review_min: int = 3
+    learned_block_min: int = 5
 
     rule_drain_ratio: float = 0.99
     rule_night_hour_end: int = 8
