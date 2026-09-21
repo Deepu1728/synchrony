@@ -1,0 +1,23 @@
+{
+  "error_balance_orig": 1.031000018119812,
+  "oldbalanceOrg": 0.3019999861717224,
+  "balance_drain_ratio": 0.22519999742507935,
+  "newbalanceOrig": 0.17329999804496765,
+  "amount": 0.07599999755620956,
+  "newbalanceDest": 0.052000001072883606,
+  "oldbalanceDest": 0.05119999870657921,
+  "hour": 0.01899999938905239,
+  "orig_zero_balance": 0.017500000074505806,
+  "dest_amount_vs_avg": 0.00989999994635582,
+  "error_balance_dest": 0.009100000374019146,
+  "dest_prior_count": 0.009100000374019146,
+  "is_transfer": 0.0052999998442828655,
+  "dest_velocity_24h": 0.0031999999191612005,
+  "dest_time_gap": 0.00279999990016222,
+  "dest_first_time": 0.0005000000237487257,
+  "sender_prior_count": 0.0,
+  "amount_vs_user_avg": 0.0,
+  "sender_time_gap": 0.0,
+  "sender_velocity_24h": 0.0,
+  "new_recipient": 0.0
+}
