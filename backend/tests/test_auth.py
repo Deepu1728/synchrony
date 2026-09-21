@@ -109,9 +109,9 @@ def test_token_for_deleted_user_is_401():
     assert client.post("/score", json=GOOD_TXN, headers=auth_header(token)).status_code == 401
 
 
-def test_good_payload_is_accepted():
-    r = client.post("/score", json=GOOD_TXN, headers=auth_header())
-    assert r.status_code == 200 and r.json()["validated"] is True
+def test_good_payload_is_accepted(client, auth):
+    r = client.post("/score", json=GOOD_TXN, headers=auth)
+    assert r.status_code == 200 and r.json()["decision"] in ("approve", "review", "block")
 
 
 @pytest.mark.parametrize(

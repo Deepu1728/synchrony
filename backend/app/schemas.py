@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Annotated, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
@@ -39,3 +40,80 @@ class UserOut(BaseModel):
 
     username: str
     role: str
+
+
+class ReasonOut(BaseModel):
+    feature: str
+    label: str
+    value: float
+    shap: float
+    direction: str
+    text: str
+
+
+class RuleFlagOut(BaseModel):
+    code: str
+    message: str
+    weight: float
+
+
+class ScoreOut(BaseModel):
+    transaction_id: int
+    decision: Literal["approve", "review", "block"]
+    combined_score: float
+    xgb_proba: float
+    anomaly_percentile: float
+    similarity_score: float
+    fraud_neighbours: int
+    rule_score: float
+    rules: list[RuleFlagOut]
+    alert_id: int | None
+    explanation: str | None
+    reasons: list[ReasonOut]
+    latency_ms: float
+
+
+class TransactionSummary(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    step: int
+    type: str
+    amount: float
+    name_orig: str
+    name_dest: str
+    true_label: bool | None
+
+
+class AlertOut(BaseModel):
+    id: int
+    decision: str
+    score: float
+    status: str
+    reasons: list[ReasonOut]
+    rules: list[RuleFlagOut]
+    explanation_text: str | None
+    explanation_source: str
+    created_at: datetime
+    transaction: TransactionSummary
+
+
+class AlertList(BaseModel):
+    total: int
+    items: list[AlertOut]
+
+
+class FeedbackIn(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    alert_id: int = Field(ge=1)
+    verdict: Literal["fraud", "legit"]
+    note: str | None = Field(default=None, max_length=500)
+
+
+class FeedbackOut(BaseModel):
+    id: int
+    alert_id: int
+    verdict: str
+    alert_status: str
+    case_added: bool
