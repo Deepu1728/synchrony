@@ -214,3 +214,20 @@ pre { margin: 0; font-size: 0.9rem; }
   .shap-row { grid-template-columns: minmax(0, 1fr) 3.2rem; row-gap: 0.15rem; }
   .shap-label { grid-column: 1 / -1; flex-direction: row; justify-content: space-between; gap: 0.75rem; }
 }
+
+.metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+.metric { margin-bottom: 0; }
+.metric h2 { margin-bottom: 0.15rem; }
+.metric-help { margin: 0 0 0.5rem; }
+.metric-value { margin: 0; font-size: 2.4rem; font-weight: 700; line-height: 1.1; }
+.metric-detail { margin: 0.3rem 0; font-size: 0.92rem; }
+.metric p.muted { margin: 0.2rem 0 0; }
+.metric-lower { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 1rem; margin-bottom: 1rem; }
+@media (max-width: 860px) { .metric-lower { grid-template-columns: minmax(0, 1fr); } }
+
+.stack { display: flex; height: 1.3rem; border-radius: 999px; overflow: hidden; background: var(--border); }
+.stack-part { display: block; height: 100%; }
+.stack-legend { list-style: none; margin: 0.75rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
+.stack-legend li { display: flex; align-items: center; gap: 0.4rem; }
+.swatch { width: 0.75rem; height: 0.75rem; border-radius: 3px; display: inline-block; }
+.stack-name { color: var(--muted); }

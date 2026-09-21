@@ -94,3 +94,29 @@ export type SimilarResponse = {
 };
 
 export type FeedbackResult = { id: number; alert_id: number; verdict: Verdict; alert_status: AlertStatus; case_added: boolean };
+
+export type GroundTruth = {
+  labelled: number;
+  fraud_total: number;
+  fraud_flagged: number;
+  fraud_blocked: number;
+  genuine_total: number;
+  genuine_flagged: number;
+  genuine_blocked: number;
+  catch_rate: number | null;
+  block_catch_rate: number | null;
+  false_positive_rate: number | null;
+  false_block_rate: number | null;
+  precision_flagged: number | null;
+  precision_block: number | null;
+  stream_fraud_share: number | null;
+};
+
+export type Metrics = {
+  window_minutes: number | null;
+  decisions: { total: number; approve: number; review: number; block: number };
+  ground_truth: GroundTruth;
+  alerts: { open: number; confirmed_fraud: number; false_positive: number; reviewed: number; analyst_precision: number | null };
+  learned_cases: { fraud: number; legit: number };
+  note: string;
+};
