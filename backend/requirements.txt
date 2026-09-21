@@ -9,6 +9,7 @@ bcrypt
 anthropic
 httpx
 pytest
+pytest-cov
 python-multipart
 pandas
 numpy

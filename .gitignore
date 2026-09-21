@@ -26,3 +26,5 @@ ml/data/*
 .DS_Store
 .vscode/
 .idea/
+.coverage
+htmlcov/
