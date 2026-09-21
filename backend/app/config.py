@@ -20,6 +20,8 @@ class Settings(BaseSettings):
 
     anthropic_api_key: str = ""
     llm_model: str = "claude-haiku-4-5-20251001"
+    seed_admin_password: str = ""
+    seed_analyst_password: str = ""
 
     @property
     def database_url(self) -> str:
