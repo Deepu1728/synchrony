@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import { ProtectedRoute } from "./auth/ProtectedRoute";
 import { Layout } from "./components/Layout";
 import { AlertPage } from "./pages/AlertPage";
 import { FeedPage } from "./pages/FeedPage";
@@ -10,11 +11,13 @@ export default function App() {
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
-      <Route element={<Layout />}>
-        <Route path="/" element={<FeedPage />} />
-        <Route path="/alerts/:id" element={<AlertPage />} />
-        <Route path="/metrics" element={<MetricsPage />} />
-        <Route path="*" element={<NotFoundPage />} />
+      <Route element={<ProtectedRoute />}>
+        <Route element={<Layout />}>
+          <Route path="/" element={<FeedPage />} />
+          <Route path="/alerts/:id" element={<AlertPage />} />
+          <Route path="/metrics" element={<MetricsPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
       </Route>
     </Routes>
   );
