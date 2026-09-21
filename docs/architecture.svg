@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 810" width="1120" height="810" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif">
+<title>SYNCHRONY architecture</title>
+<desc>A transaction is validated, turned into features, scored by rules, XGBoost and a similarity search, combined into approve, review or block, stored, explained, and reviewed by analysts whose labels feed back into the similarity search.</desc>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#4a5568"/></marker><marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#2f7d4f"/></marker></defs>
+<rect width="1120" height="810" fill="#ffffff"/>
+<text x="30" y="36" font-size="20" font-weight="700" fill="#1a2233">SYNCHRONY: how a transaction is scored</text>
+<rect x="30" y="90" width="200" height="96" rx="8" fill="#f4f6fa" stroke="#8a94a6" stroke-width="1.4"/>
+<text x="42" y="111" font-size="13.5" font-weight="700" fill="#1a2233">Transaction source</text>
+<text x="42" y="130" font-size="12" fill="#3d475c">PaySim simulator or a</text>
+<text x="42" y="146" font-size="12" fill="#3d475c">payment system sending</text>
+<text x="42" y="162" font-size="12" fill="#3d475c">transactions</text>
+<rect x="30" y="690" width="200" height="118" rx="8" fill="#eef4ff" stroke="#5b7fc7" stroke-width="1.4"/>
+<text x="42" y="711" font-size="13.5" font-weight="700" fill="#1a2233">Analyst console</text>
+<text x="42" y="730" font-size="12" fill="#3d475c">React + TypeScript</text>
+<text x="42" y="746" font-size="12" fill="#3d475c">login · live feed · alert</text>
+<text x="42" y="762" font-size="12" fill="#3d475c">detail · metrics · confirm</text>
+<text x="42" y="778" font-size="12" fill="#3d475c">fraud / mark genuine</text>
+<rect x="270" y="60" width="570" height="730" rx="12" fill="#fbfcfe" stroke="#5b7fc7" stroke-width="1.6"/>
+<text x="288" y="84" font-size="14" font-weight="700" fill="#2a4a8f">FastAPI backend  ·  JWT login (admin, analyst)</text>
+<rect x="290" y="100" width="530" height="52" rx="8" fill="#f4f6fa" stroke="#8a94a6" stroke-width="1.4"/>
+<text x="302" y="121" font-size="13.5" font-weight="700" fill="#1a2233">1  Validate   POST /score</text>
+<text x="302" y="140" font-size="12" fill="#3d475c">Pydantic: known type, sane ranges, no NaN, sender differs from receiver</text>
+<rect x="290" y="168" width="530" height="68" rx="8" fill="#f4f6fa" stroke="#8a94a6" stroke-width="1.4"/>
+<text x="302" y="189" font-size="13.5" font-weight="700" fill="#1a2233">2  Feature engineering  (21 features)</text>
+<text x="302" y="208" font-size="12" fill="#3d475c">balance errors, drain ratio, hour of day, amount vs the account's average,</text>
+<text x="302" y="224" font-size="12" fill="#3d475c">sender and receiver history, 24 hour velocity, new recipient</text>
+<rect x="290" y="254" width="166" height="100" rx="8" fill="#fff7e8" stroke="#c98a1b" stroke-width="1.4"/>
+<text x="302" y="275" font-size="13.5" font-weight="700" fill="#1a2233">Rules</text>
+<text x="302" y="294" font-size="12" fill="#3d475c">drain · night hours ·</text>
+<text x="302" y="310" font-size="12" fill="#3d475c">new receiver + high</text>
+<text x="302" y="326" font-size="12" fill="#3d475c">amount · amount cap</text>
+<text x="302" y="342" font-size="12" fill="#3d475c">(can force review)</text>
+<rect x="472" y="254" width="166" height="100" rx="8" fill="#eef8f1" stroke="#2f7d4f" stroke-width="1.4"/>
+<text x="484" y="275" font-size="13.5" font-weight="700" fill="#1a2233">XGBoost</text>
+<text x="484" y="294" font-size="12" fill="#3d475c">fraud probability</text>
+<text x="484" y="310" font-size="12" fill="#3d475c">weight 0.80</text>
+<text x="484" y="326" font-size="12" fill="#3d475c">SHAP explains the</text>
+<text x="484" y="342" font-size="12" fill="#3d475c">top factors</text>
+<rect x="654" y="254" width="166" height="100" rx="8" fill="#f3eefb" stroke="#7a55c4" stroke-width="1.4"/>
+<text x="666" y="275" font-size="13.5" font-weight="700" fill="#1a2233">Similarity search</text>
+<text x="666" y="294" font-size="12" fill="#3d475c">10 nearest past cases</text>
+<text x="666" y="310" font-size="12" fill="#3d475c">(pgvector, exact)</text>
+<text x="666" y="326" font-size="12" fill="#3d475c">fraud share, weight 0.20</text>
+<text x="666" y="342" font-size="12" fill="#3d475c">analyst labels count</text>
+<rect x="290" y="372" width="530" height="96" rx="8" fill="#f4f6fa" stroke="#8a94a6" stroke-width="1.4"/>
+<text x="302" y="393" font-size="13.5" font-weight="700" fill="#1a2233">3  Combine and decide</text>
+<text x="302" y="412" font-size="12" fill="#3d475c">score = 0.80 · XGBoost + 0.20 · similarity</text>
+<text x="302" y="428" font-size="12" fill="#3d475c">review at 0.30 or more, block at 0.70 or more</text>
+<text x="302" y="444" font-size="12" fill="#3d475c">AMOUNT_CAP and LEARNED_FRAUD_PATTERN force review or block</text>
+<text x="302" y="460" font-size="12" fill="#3d475c">(the Isolation Forest anomaly score is recorded but not used to decide)</text>
+<rect x="290" y="486" width="166" height="40" rx="8" fill="#e8f6ec" stroke="#2f7d4f" stroke-width="1.4"/>
+<text x="302" y="507" font-size="13" font-weight="700" fill="#1a2233">Approve</text>
+<rect x="472" y="486" width="166" height="40" rx="8" fill="#fff4dc" stroke="#c98a1b" stroke-width="1.4"/>
+<text x="484" y="507" font-size="13" font-weight="700" fill="#1a2233">Review</text>
+<rect x="654" y="486" width="166" height="40" rx="8" fill="#fde9e7" stroke="#c0392b" stroke-width="1.4"/>
+<text x="666" y="507" font-size="13" font-weight="700" fill="#1a2233">Block</text>
+<rect x="290" y="544" width="530" height="82" rx="8" fill="#f4f6fa" stroke="#8a94a6" stroke-width="1.4"/>
+<text x="302" y="565" font-size="13.5" font-weight="700" fill="#1a2233">4  Store and alert</text>
+<text x="302" y="584" font-size="12" fill="#3d475c">Every transaction is saved with its features, scores and decision.</text>
+<text x="302" y="600" font-size="12" fill="#3d475c">Review and block also create an alert with the top 6 SHAP factors</text>
+<text x="302" y="616" font-size="12" fill="#3d475c">and a template explanation, returned immediately.</text>
+<rect x="290" y="642" width="530" height="56" rx="8" fill="#f4f6fa" stroke="#8a94a6" stroke-width="1.4"/>
+<text x="302" y="663" font-size="13.5" font-weight="700" fill="#1a2233">5  Background: plain-language explanation</text>
+<text x="302" y="682" font-size="12" fill="#3d475c">Claude Haiku rewrites the text · guardrails check it, otherwise the template stays</text>
+<rect x="290" y="714" width="530" height="56" rx="8" fill="#eef4ff" stroke="#5b7fc7" stroke-width="1.4"/>
+<text x="302" y="735" font-size="13.5" font-weight="700" fill="#1a2233">Analyst endpoints</text>
+<text x="302" y="754" font-size="12" fill="#3d475c">GET transactions, alerts, similar cases, metrics  ·  POST feedback, report-fraud</text>
+<path d="M555.0 152 V168" fill="none" stroke="#4a5568" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M555.0 236 V254" fill="none" stroke="#4a5568" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M373.0 354 V372" fill="none" stroke="#4a5568" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M555.0 354 V372" fill="none" stroke="#4a5568" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M737.0 354 V372" fill="none" stroke="#4a5568" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M373.0 468 V486" fill="none" stroke="#4a5568" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M555.0 468 V486" fill="none" stroke="#4a5568" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M737.0 468 V486" fill="none" stroke="#4a5568" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M555.0 526 V544" fill="none" stroke="#4a5568" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M737.0 526 V544" fill="none" stroke="#4a5568" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M555.0 626 V642" fill="none" stroke="#4a5568" stroke-width="1.6" marker-end="url(#a)"/>
+<rect x="880" y="80" width="210" height="84" rx="8" fill="#f4f6fa" stroke="#8a94a6" stroke-width="1.4"/>
+<text x="892" y="101" font-size="13.5" font-weight="700" fill="#1a2233">Trained offline  (ml/)</text>
+<text x="892" y="120" font-size="12" fill="#3d475c">xgb.json · iforest.joblib</text>
+<text x="892" y="136" font-size="12" fill="#3d475c">embed_scaler.json</text>
+<text x="892" y="152" font-size="12" fill="#3d475c">loaded at startup</text>
+<rect x="880" y="200" width="210" height="380" rx="8" fill="#f7f9fc" stroke="#5b6577" stroke-width="1.4"/>
+<text x="892" y="221" font-size="13.5" font-weight="700" fill="#1a2233">PostgreSQL + pgvector</text>
+<text x="892" y="240" font-size="12" fill="#3d475c">users</text>
+<text x="892" y="256" font-size="12" fill="#3d475c">roles, hashed passwords</text>
+<text x="892" y="272" font-size="12" fill="#3d475c"></text>
+<text x="892" y="288" font-size="12" fill="#3d475c">transactions</text>
+<text x="892" y="304" font-size="12" fill="#3d475c">features, scores, decision,</text>
+<text x="892" y="320" font-size="12" fill="#3d475c">simulator label</text>
+<text x="892" y="336" font-size="12" fill="#3d475c"></text>
+<text x="892" y="352" font-size="12" fill="#3d475c">alerts</text>
+<text x="892" y="368" font-size="12" fill="#3d475c">status, SHAP reasons,</text>
+<text x="892" y="384" font-size="12" fill="#3d475c">explanation text</text>
+<text x="892" y="400" font-size="12" fill="#3d475c"></text>
+<text x="892" y="416" font-size="12" fill="#3d475c">feedback</text>
+<text x="892" y="432" font-size="12" fill="#3d475c">who reviewed what (audit)</text>
+<text x="892" y="448" font-size="12" fill="#3d475c"></text>
+<text x="892" y="464" font-size="12" fill="#3d475c">fraud_cases</text>
+<text x="892" y="480" font-size="12" fill="#3d475c">training cases plus analyst-</text>
+<text x="892" y="496" font-size="12" fill="#3d475c">labelled cases (embeddings)</text>
+<rect x="880" y="640" width="210" height="92" rx="8" fill="#f4f6fa" stroke="#8a94a6" stroke-width="1.4"/>
+<text x="892" y="661" font-size="13.5" font-weight="700" fill="#1a2233">Anthropic API</text>
+<text x="892" y="680" font-size="12" fill="#3d475c">Claude Haiku 4.5</text>
+<text x="892" y="696" font-size="12" fill="#3d475c">optional: without a key</text>
+<text x="892" y="712" font-size="12" fill="#3d475c">the template is used</text>
+<path d="M230 138 H290" fill="none" stroke="#4a5568" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="236" y="128" font-size="11" fill="#5b6577" text-anchor="start" font-style="italic">sends</text>
+<path d="M230 728 H290" fill="none" stroke="#4a5568" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M290 756 H230" fill="none" stroke="#4a5568" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="236" y="720" font-size="11" fill="#5b6577" text-anchor="start" font-style="italic">requests</text>
+<text x="236" y="774" font-size="11" fill="#5b6577" text-anchor="start" font-style="italic">JSON</text>
+<path d="M880 122 H840" fill="none" stroke="#4a5568" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#a)"/>
+<path d="M820 210 H880" fill="none" stroke="#4a5568" stroke-width="1.6" marker-start="url(#a)" marker-end="url(#a)"/>
+<text x="846" y="202" font-size="11" fill="#5b6577" text-anchor="start" font-style="italic">history</text>
+<path d="M820 320 H880" fill="none" stroke="#4a5568" stroke-width="1.6" marker-start="url(#a)" marker-end="url(#a)"/>
+<text x="846" y="312" font-size="11" fill="#5b6577" text-anchor="start" font-style="italic">cases</text>
+<path d="M820 552 H880" fill="none" stroke="#4a5568" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="846" y="544" font-size="11" fill="#5b6577" text-anchor="start" font-style="italic">save</text>
+<path d="M820 670 H880" fill="none" stroke="#4a5568" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#a)"/>
+<path d="M820 742 H858 V572 H880" fill="none" stroke="#2f7d4f" stroke-width="2" marker-end="url(#g)"/>
+<text x="866" y="764" font-size="11.5" fill="#2f7d4f" text-anchor="start">analyst labels become new cases</text>
+<text x="866" y="779" font-size="11.5" fill="#2f7d4f" text-anchor="start">and change future similarity scores</text>
+</svg>
