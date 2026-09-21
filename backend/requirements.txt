@@ -10,3 +10,11 @@ anthropic
 httpx
 pytest
 python-multipart
+pandas
+numpy
+pyarrow
+xgboost
+scikit-learn
+shap
+joblib
+matplotlib

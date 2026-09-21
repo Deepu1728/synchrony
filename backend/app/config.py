@@ -1,6 +1,6 @@
 from pathlib import Path
+
 from pydantic import Field
-from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
@@ -21,8 +21,22 @@ class Settings(BaseSettings):
 
     anthropic_api_key: str = ""
     llm_model: str = "claude-haiku-4-5-20251001"
+
     seed_admin_password: str = ""
     seed_analyst_password: str = ""
+
+    score_weight_xgb: float = 0.80
+    score_weight_similarity: float = 0.20
+    score_weight_rules: float = 0.0
+    score_weight_anomaly: float = 0.0
+    review_threshold: float = 0.30
+    block_threshold: float = 0.70
+    similarity_k: int = 10
+
+    rule_drain_ratio: float = 0.99
+    rule_night_hour_end: int = 8
+    rule_high_amount: float = 200_000
+    rule_amount_cap: float = 10_000_000
 
     @property
     def database_url(self) -> str:
