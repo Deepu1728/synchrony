@@ -137,3 +137,7 @@ def test_bad_payload_is_422(patch):
 def test_missing_field_is_422():
     bad = {k: v for k, v in GOOD_TXN.items() if k != "amount"}
     assert client.post("/score", json=bad, headers=auth_header()).status_code == 422
+
+def test_short_paysim_account_ids_are_accepted(client, auth):
+    r = client.post("/score", json={**GOOD_TXN, "name_dest": "C970"}, headers=auth)
+    assert r.status_code == 200

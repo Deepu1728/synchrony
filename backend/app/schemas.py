@@ -3,7 +3,7 @@ from typing import Annotated, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
-AccountId = Annotated[str, Field(pattern=r"^[CM][0-9]{6,12}$")]
+AccountId = Annotated[str, Field(pattern=r"^[CM][0-9]{1,12}$")]
 Money = Annotated[float, Field(ge=0, le=1e11, allow_inf_nan=False)]
 
 
