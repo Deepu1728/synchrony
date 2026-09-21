@@ -1,0 +1,61 @@
+{
+  "dataset": {
+    "name": "PaySim (synthetic mobile money)",
+    "rows_total": 6362620,
+    "fraud_total": 8213,
+    "fraud_rate_total": 0.001290820448180152,
+    "imbalance_ratio": 773.7,
+    "rows_modeled": 2770409,
+    "modeled_types": [
+      "TRANSFER",
+      "CASH_OUT"
+    ],
+    "fraud_rate_modeled": 0.002964544224336551
+  },
+  "split": {
+    "method": "time-based on step: 60% train / 20% validation / 20% test",
+    "train_rows": 1662245,
+    "val_rows": 554082,
+    "test_rows": 554082,
+    "test_fraud": 4260
+  },
+  "xgboost": {
+    "threshold": 0.7778368592262268,
+    "precision": 0.999057714958775,
+    "recall": 0.9955399061032864,
+    "f1": 0.9972957084068195,
+    "pr_auc": 0.9998814238823356,
+    "baseline_pr_auc": 0.007688392692778326,
+    "confusion_matrix": {
+      "tn": 549818,
+      "fp": 4,
+      "fn": 19,
+      "tp": 4241
+    },
+    "n_features": 21
+  },
+  "isolation_forest": {
+    "model": "IsolationForest (unsupervised)",
+    "pr_auc": 0.08948287408429587,
+    "precision": 0.0967741935483871,
+    "recall": 0.3816901408450704,
+    "f1": 0.15440129142531572,
+    "recall_at_precision_90": 0.00023474178403755868,
+    "recall_at_precision_50": 0.0028169014084507044
+  },
+  "top_shap_features": {
+    "error_balance_orig": 1.031000018119812,
+    "oldbalanceOrg": 0.3019999861717224,
+    "balance_drain_ratio": 0.22519999742507935,
+    "newbalanceOrig": 0.17329999804496765,
+    "amount": 0.07599999755620956,
+    "newbalanceDest": 0.052000001072883606,
+    "oldbalanceDest": 0.05119999870657921,
+    "hour": 0.01899999938905239
+  },
+  "caveats": [
+    "PaySim is synthetic; near-perfect scores reflect clean simulator patterns, not real-world fraud.",
+    "Senders almost never repeat in PaySim, so sender-history features carry little signal.",
+    "Isolation Forest is weak here; XGBoost makes the decision, IForest is a secondary anomaly score."
+  ]
+}
