@@ -31,3 +31,12 @@ def auth(client):
         pytest.skip("set SEED_ADMIN_PASSWORD in .env and run scripts.seed")
     r = client.post("/auth/login", data={"username": "admin", "password": settings.seed_admin_password})
     return {"Authorization": f"Bearer {r.json()['access_token']}"}
+
+
+
+@pytest.fixture(autouse=True)
+def no_real_llm(monkeypatch):
+    from app import llm
+
+    monkeypatch.setattr(settings, "anthropic_api_key", "")
+    llm._calls.clear()

@@ -5,6 +5,7 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session, joinedload
 
 from app.db import get_db
+from app.explanations import improve_explanation
 from app.models import Alert
 from app.schemas import AlertList, AlertOut, TransactionSummary
 
@@ -46,4 +47,12 @@ def get_alert(alert_id: int, db: Session = Depends(get_db)):
     alert = db.get(Alert, alert_id, options=[joinedload(Alert.transaction)])
     if not alert:
         raise HTTPException(404, "Alert not found")
+    return to_out(alert)
+
+@router.post("/{alert_id}/explain", response_model=AlertOut)
+def explain_alert(alert_id: int, db: Session = Depends(get_db)):
+    alert = db.get(Alert, alert_id, options=[joinedload(Alert.transaction)])
+    if not alert:
+        raise HTTPException(404, "Alert not found")
+    improve_explanation(db, alert)
     return to_out(alert)

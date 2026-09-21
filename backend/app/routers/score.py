@@ -1,11 +1,14 @@
 import logging
 import time
 
-from fastapi import APIRouter, Depends
+import fastapi
+
+from fastapi import APIRouter, BackgroundTasks, Depends
 from sqlalchemy.orm import Session
 
 from app.db import get_db
-from app.explanations import fallback_text
+from app import llm
+from app.explanations import explain_in_background, fallback_text
 from app.models import Alert, Transaction
 from app.schemas import ScoreOut, TransactionIn
 from app.scoring import ml
@@ -16,7 +19,7 @@ logger = logging.getLogger(__name__)
 
 
 @router.post("/score", response_model=ScoreOut)
-def score(txn: TransactionIn, db: Session = Depends(get_db)):
+def score(txn: TransactionIn, background: BackgroundTasks, db: Session = Depends(get_db)):
     started = time.perf_counter()
     result = score_transaction(db, txn)
 
@@ -47,6 +50,8 @@ def score(txn: TransactionIn, db: Session = Depends(get_db)):
         db.add(alert)
         db.flush()
     db.commit()
+    if alert and llm.is_enabled():
+        background.add_task(explain_in_background, alert.id)
 
     return ScoreOut(
         transaction_id=row.id, decision=result.decision, combined_score=result.combined_score,

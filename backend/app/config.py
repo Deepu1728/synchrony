@@ -21,6 +21,9 @@ class Settings(BaseSettings):
 
     anthropic_api_key: str = ""
     llm_model: str = "claude-haiku-4-5-20251001"
+    llm_timeout_seconds: float = 8.0
+    llm_max_output_tokens: int = 220
+    llm_max_calls_per_minute: int = 30
 
     seed_admin_password: str = ""
     seed_analyst_password: str = ""
