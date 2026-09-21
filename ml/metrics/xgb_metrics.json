@@ -1,0 +1,21 @@
+{
+  "split": {
+    "train_rows": 1662245,
+    "val_rows": 554082,
+    "test_rows": 554082,
+    "test_fraud": 4260
+  },
+  "threshold": 0.7778368592262268,
+  "precision": 0.999057714958775,
+  "recall": 0.9955399061032864,
+  "f1": 0.9972957084068195,
+  "pr_auc": 0.9998814238823356,
+  "confusion_matrix": {
+    "tn": 549818,
+    "fp": 4,
+    "fn": 19,
+    "tp": 4241
+  },
+  "baseline_pr_auc": 0.007688392692778326,
+  "best_iteration": 23
+}

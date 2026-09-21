@@ -1,0 +1,26 @@
+{
+  "features": [
+    "hour",
+    "is_transfer",
+    "amount",
+    "oldbalanceOrg",
+    "newbalanceOrig",
+    "oldbalanceDest",
+    "newbalanceDest",
+    "orig_zero_balance",
+    "balance_drain_ratio",
+    "error_balance_orig",
+    "error_balance_dest",
+    "sender_prior_count",
+    "amount_vs_user_avg",
+    "sender_time_gap",
+    "sender_velocity_24h",
+    "new_recipient",
+    "dest_prior_count",
+    "dest_amount_vs_avg",
+    "dest_time_gap",
+    "dest_velocity_24h",
+    "dest_first_time"
+  ],
+  "threshold": 0.7778368592262268
+}
