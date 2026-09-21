@@ -20,12 +20,21 @@ class Neighbours:
 
 def find_neighbours(db: Session, features: dict) -> Neighbours:
     vector = embedding.embed_one(features)
-    db.execute(text("SET LOCAL hnsw.ef_search = 100"))
-    rows = db.execute(
-        select(FraudCase.label, FraudCase.source)
-        .order_by(FraudCase.embedding.l2_distance(vector))
-        .limit(settings.similarity_k)
-    ).all()
+    if settings.similarity_exact:
+        db.execute(text("SET LOCAL enable_indexscan = off"))
+        db.execute(text("SET LOCAL enable_bitmapscan = off"))
+    else:
+        db.execute(text("SET LOCAL hnsw.ef_search = 200"))
+    try:
+        rows = db.execute(
+            select(FraudCase.label, FraudCase.source)
+            .order_by(FraudCase.embedding.l2_distance(vector))
+            .limit(settings.similarity_k)
+        ).all()
+    finally:
+        if settings.similarity_exact:
+            db.execute(text("SET LOCAL enable_indexscan = on"))
+            db.execute(text("SET LOCAL enable_bitmapscan = on"))
     if not rows:
         return Neighbours()
     fraud = sum(1 for label, _ in rows if label == "fraud")

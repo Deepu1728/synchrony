@@ -1,0 +1,100 @@
+{
+  "scenarios_per_phase": 40,
+  "learn_scenarios": 15,
+  "genuine_per_check": 2000,
+  "seed": 7,
+  "results": [
+    {
+      "family": "structuring",
+      "before": {
+        "txns": 273,
+        "flagged_rate": 0.0879,
+        "blocked_rate": 0.0586,
+        "money_lost_share": 0.8364,
+        "labelled": 0
+      },
+      "learned_labels": 85,
+      "after": {
+        "txns": 277,
+        "flagged_rate": 0.8159,
+        "blocked_rate": 0.6498,
+        "money_lost_share": 0.0699,
+        "labelled": 0
+      },
+      "genuine_false_alarms": {
+        "rows": 2000,
+        "before": 2,
+        "after": 13
+      }
+    },
+    {
+      "family": "partial_drain",
+      "before": {
+        "txns": 40,
+        "flagged_rate": 0.35,
+        "blocked_rate": 0.1,
+        "money_lost_share": 0.6832,
+        "labelled": 0
+      },
+      "learned_labels": 15,
+      "after": {
+        "txns": 40,
+        "flagged_rate": 0.425,
+        "blocked_rate": 0.225,
+        "money_lost_share": 0.5271,
+        "labelled": 0
+      },
+      "genuine_false_alarms": {
+        "rows": 2000,
+        "before": 2,
+        "after": 2
+      }
+    },
+    {
+      "family": "combo",
+      "before": {
+        "txns": 40,
+        "flagged_rate": 0.15,
+        "blocked_rate": 0.0,
+        "money_lost_share": 0.3103,
+        "labelled": 0
+      },
+      "learned_labels": 15,
+      "after": {
+        "txns": 40,
+        "flagged_rate": 0.675,
+        "blocked_rate": 0.4,
+        "money_lost_share": 0.0551,
+        "labelled": 0
+      },
+      "genuine_false_alarms": {
+        "rows": 2000,
+        "before": 2,
+        "after": 2
+      }
+    },
+    {
+      "family": "aged_mule",
+      "before": {
+        "txns": 40,
+        "flagged_rate": 1.0,
+        "blocked_rate": 0.975,
+        "money_lost_share": 0.0,
+        "labelled": 0
+      },
+      "learned_labels": 15,
+      "after": {
+        "txns": 40,
+        "flagged_rate": 1.0,
+        "blocked_rate": 1.0,
+        "money_lost_share": 0.0,
+        "labelled": 0
+      },
+      "genuine_false_alarms": {
+        "rows": 2000,
+        "before": 2,
+        "after": 2
+      }
+    }
+  ]
+}

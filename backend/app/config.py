@@ -35,6 +35,7 @@ class Settings(BaseSettings):
     review_threshold: float = 0.30
     block_threshold: float = 0.70
     similarity_k: int = 10
+    similarity_exact: bool = True
     learned_review_min: int = 3
     learned_block_min: int = 5
 
