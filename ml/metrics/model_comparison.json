@@ -1,0 +1,25 @@
+{
+  "iforest_threshold_f1": 0.5626927896407201,
+  "genuine_median_score": 0.38826100304583977,
+  "fraud_median_score": 0.5045536725884575,
+  "comparison": [
+    {
+      "model": "XGBoost (supervised)",
+      "pr_auc": 0.9998814238823356,
+      "precision": 0.999057714958775,
+      "recall": 0.9955399061032864,
+      "f1": 0.9972957084068195,
+      "recall_at_precision_90": 0.9997652582159624,
+      "recall_at_precision_50": 1.0
+    },
+    {
+      "model": "IsolationForest (unsupervised)",
+      "pr_auc": 0.08948287408429587,
+      "precision": 0.0967741935483871,
+      "recall": 0.3816901408450704,
+      "f1": 0.15440129142531572,
+      "recall_at_precision_90": 0.00023474178403755868,
+      "recall_at_precision_50": 0.0028169014084507044
+    }
+  ]
+}
