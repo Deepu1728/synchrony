@@ -1,5 +1,6 @@
 from pathlib import Path
-
+from pydantic import Field
+from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
@@ -14,7 +15,7 @@ class Settings(BaseSettings):
     postgres_host: str = "localhost"
     postgres_port: int = 5432
 
-    jwt_secret: str
+    jwt_secret: str = Field(min_length=32)
     jwt_algorithm: str = "HS256"
     jwt_expire_minutes: int = 60
 
